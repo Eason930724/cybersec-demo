@@ -38,7 +38,7 @@
       <button class="learn-more">立即開始挑戰</button>
     </div>
     <div class="hero-badge">
-      <img src="assets/badge.png" alt="平台徽章" />
+     
     </div>
   </section>
 
