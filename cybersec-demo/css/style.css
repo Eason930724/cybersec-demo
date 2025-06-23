@@ -13,50 +13,67 @@ header {
   background-color: #151c24;
 }
 header .logo {
-  font-size: 20px;
+  font-size: 22px;
   font-weight: bold;
 }
 nav a {
   margin: 0 10px;
   text-decoration: none;
   color: white;
+  font-weight: 500;
 }
 .actions button {
   margin-left: 10px;
-  padding: 8px 12px;
+  padding: 8px 14px;
   border: none;
   border-radius: 4px;
+  font-weight: bold;
 }
 .login {
   background-color: transparent;
-  border: 1px solid #8aff70;
-  color: #8aff70;
+  border: 1px solid #60e375;
+  color: #60e375;
 }
 .join {
-  background-color: #8aff70;
+  background-color: #60e375;
   color: black;
-  font-weight: bold;
 }
 .hero {
   display: flex;
   justify-content: space-between;
-  padding: 60px 40px;
-  background: radial-gradient(circle, #252f3f, #1d2630);
+  align-items: center;
+  padding: 80px 40px;
+  background: radial-gradient(circle, #2b3546, #1d2630);
 }
 .hero-text {
   max-width: 600px;
 }
 .hero-text .new-label {
-  color: #8aff70;
+  color: #60e375;
+  font-weight: bold;
+  font-size: 14px;
+}
+.hero-text h1 {
+  font-size: 32px;
+  margin: 10px 0;
+}
+.hero-text p {
+  font-size: 16px;
+}
+.learn-more {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #60e375;
+  border: none;
   font-weight: bold;
 }
 .hero-badge img {
   height: 200px;
 }
-.learn-more {
-  margin-top: 20px;
-  padding: 10px 20px;
-  background-color: #8aff70;
-  border: none;
-  font-weight: bold;
+footer {
+  text-align: center;
+  padding: 20px;
+  background-color: #151c24;
+  font-size: 14px;
+  color: #aaa;
 }
