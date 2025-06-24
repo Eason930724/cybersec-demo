@@ -31,8 +31,7 @@
   </header>
 
   <section class="hero">
-    <div class="hero-text">
-      <p class="new-label">最新活動</p>
+    <div class="hero-text">  
       <h1>資安互動式闖關平台​</h1>
       <p>從基礎觀念到攻防實戰，打造你的資安實力</p>
       <button class="learn-more">立即開始挑戰</button>
