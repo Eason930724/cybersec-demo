@@ -18,7 +18,7 @@
 
   <div class="background-overlay"></div>
   <header>
-    <div class="logo">🛡️ 資工資安挑戰平台</div>
+    <div class="logo"> 資工資安挑戰平台</div>
     <nav>
       <a href="#">學習區</a>
       <a href="#">挑戰區</a>
@@ -32,7 +32,7 @@
 
   <section class="hero">
     <div class="hero-text">
-      <p class="new-label">🔥 最新活動</p>
+      <p class="new-label">最新活動</p>
       <h1>資安互動式闖關平台​</h1>
       <p>從基礎觀念到攻防實戰，打造你的資安實力</p>
       <button class="learn-more">立即開始挑戰</button>
