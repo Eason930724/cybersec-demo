@@ -18,7 +18,7 @@
 
   <div class="background-overlay"></div>
   <header>
-    <div class="logo"> 資工資安挑戰平台</div>
+    <div class="logo"> 資安互動式闖關平台</div>
     <nav>
       <a href="#">學習區</a>
       <a href="#">挑戰區</a>
