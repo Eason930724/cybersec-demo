@@ -150,17 +150,17 @@
         </div>
     </footer>
 
-    <script src="js/script.js"></script>
-    <script>
-        // Add this script directly to index.php or into js/script.js
-        document.addEventListener('DOMContentLoaded', function() {
-            const startChallengeBtn = document.getElementById('startChallengeBtn');
-            if (startChallengeBtn) {
-                startChallengeBtn.addEventListener('click', function() {
-                    window.location.href = 'home1.html';
-                });
-            }
-        });
-    </script>
+  <script>
+    // Add this script directly to index.php or into js/script.js
+    document.addEventListener('DOMContentLoaded', function() {
+        const startChallengeBtn = document.getElementById('startChallengeBtn');
+        if (startChallengeBtn) {
+            startChallengeBtn.addEventListener('click', function() {
+                window.location.href = 'home1.php';
+            });
+        }
+    });
+</script>
+
 </body>
 </html>
