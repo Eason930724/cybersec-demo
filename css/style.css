@@ -16,6 +16,7 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 1rem;
+  width: 100%;
 }
 
 /* Background */
@@ -44,6 +45,7 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 1rem 0;
+  flex-wrap: wrap;
 }
 
 .logo {
@@ -201,18 +203,23 @@ body {
 
 .hero-actions {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: row;
   gap: 1rem;
   justify-content: center;
+  align-items: center;
   margin-bottom: 4rem;
+  flex-wrap: wrap;
 }
 
 /* Features */
 .features {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
   margin-bottom: 4rem;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .feature-card {
@@ -271,10 +278,12 @@ body {
 /* Stats */
 .stats {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 2rem;
   padding-top: 4rem;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 .stat-item {
@@ -330,6 +339,25 @@ body {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+  .header-content {
+    justify-content: space-between;
+  }
+
+  .logo {
+    flex: 1;
+  }
+
+  .actions {
+    order: 2;
+  }
+
+  .nav {
+    order: 3;
+    width: 100%;
+    margin-top: 1rem;
+    justify-content: center;
+  }
+
   .nav {
     display: none;
   }
@@ -351,6 +379,7 @@ body {
 
   .stats {
     grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
   }
 }
 
@@ -377,7 +406,33 @@ body {
   }
 
   .stats {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .features {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 767px) {
+  .features {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .btn-cta,
+  .btn-outline {
+    width: 100%;
+    max-width: 320px;
   }
 }
