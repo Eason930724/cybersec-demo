@@ -10,7 +10,7 @@ const port = process.env.PORT || 3000; // 從環境變數獲取埠號，默認�
 // 允許來自你的前端網域的跨域請求
 // 如果你的前端網頁運行在 http://localhost:8000 (例如，使用 Live Server)，請將 origin 設定為該網域
 const corsOptions = {
-  origin: 'http://localhost:5500', // 請替換為你前端網頁實際運行的網域
+  origin: 'https://cybersec-demo.onrender.com/', // 請替換為你前端網頁實際運行的網域
   optionsSuccessStatus: 200 // For legacy browser support
 };
 app.use(cors(corsOptions)); // 啟用 CORS
