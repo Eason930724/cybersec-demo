@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>概念網頁</title>
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
@@ -104,18 +103,14 @@
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
-    <!-- Header Section -->
     <header class="bg-gray-800 text-white p-4 shadow-md">
         <div class="container mx-auto flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
-            <!-- Course Selection Menu -->
             <div class="concept-block-bg text-white p-3 rounded-lg w-full md:w-auto text-center md:text-left">
                 課程項目選單
             </div>
-            <!-- Security Interactive Question Platform -->
             <div class="flex-grow text-center text-lg font-semibold">
                 資安互動闖關平台
             </div>
-            <!-- Countdown Timer & Account -->
             <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4 w-full md:w-auto">
                 <div class="concept-block-bg text-white p-3 rounded-lg text-center flex-grow">
                     倒數計時器
@@ -127,18 +122,14 @@
         </div>
     </header>
 
-    <!-- Main Content Section -->
     <main class="container mx-auto p-4 flex-grow grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <!-- Course Content (Left Column) -->
         <section class="lg:col-span-1 flex flex-col space-y-4">
             <div class="concept-block-bg text-white p-6 rounded-lg shadow-lg flex items-center justify-center min-h-[300px]">
                 <h2 class="text-2xl font-bold">課程內容</h2>
             </div>
         </section>
 
-        <!-- VM (Right Column) -->
         <section id="vm-section" class="concept-block-bg text-white p-6 rounded-lg shadow-lg flex flex-col items-center justify-center min-h-[200px] lg:min-h-0">
-            <!-- VM Toggle Button/Placeholder -->
             <div id="vm-toggle-button" class="cursor-pointer p-4 rounded-lg bg-blue-600 hover:bg-blue-700 transition flex flex-col items-center justify-center w-full h-full">
                 <svg class="w-16 h-16 text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l3 3a1 1 0 001.414-1.414L11 9.586V6z" clip-rule="evenodd"></path>
@@ -146,14 +137,12 @@
                 <p class="text-lg font-bold mt-2">點擊啟動虛擬機</p>
             </div>
 
-            <!-- VM Content (initially hidden) -->
             <div id="vm-content" class="flex-col items-center justify-center w-full h-full">
                 <svg class="w-16 h-16 mb-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l3 3a1 1 0 001.414-1.414L11 9.586V6z" clip-rule="evenodd"></path>
                 </svg>
                 <h2 class="text-2xl font-bold text-center">虛擬機</h2>
                 <p class="text-sm mt-2 text-center">您的學習環境已準備就緒！</p>
-                <!-- Add more VM controls/info here -->
                 <button class="mt-4 bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg">
                     啟動
                 </button>
@@ -161,25 +150,20 @@
         </section>
     </main>
 
-    <!-- Footer Section -->
     <footer class="bg-gray-800 text-white p-4 mt-4 shadow-inner">
         <div class="container mx-auto text-center text-lg font-semibold">
             資安互動闖關
         </div>
     </footer>
 
-    <!-- Floating AI Assistant -->
     <div id="floating-ai-assistant" class="concept-block-bg text-white p-3 rounded-lg shadow-lg">
-        <!-- Toggle Button -->
         <div id="ai-assistant-toggle-button">
             🤖
         </div>
 
-        <!-- AI Assistant Content (initially hidden) -->
         <div id="ai-assistant-content" class="mt-2">
             <h2 class="text-xl font-bold mb-2 text-center">AI助理</h2>
             <div id="ai-response" class="flex-grow p-3 bg-gray-700 rounded-md text-sm overflow-y-auto max-h-64 mb-2">
-                <!-- Chat messages will be appended here -->
                 <div class="chat-message chat-ai">AI的回應將顯示在這裡。</div>
             </div>
             <textarea id="ai-assistant-input" class="w-full p-2 rounded-md text-gray-800 mb-2 h-16 resize-none" placeholder="輸入您的問題..."></textarea>
@@ -234,15 +218,22 @@
             aiAssistantChatHistory.push({ role: "user", parts: [{ text: prompt }] });
 
             try {
+                // 將請求發送到你的後端代理伺服器
+                // 請確保這個 URL 與你的後端伺服器實際運行的地址和埠號相符
+                const backendProxyUrl = 'http://localhost:3000/api/gemini-chat'; 
+                
                 const payload = { contents: aiAssistantChatHistory };
-                const apiKey = "AIzaSyDkWhZgLYngUlUSQqcvo6v7-CoWgV3qSTU"; // Leave this as-is; Canvas will provide the key at runtime.
-                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
-                const response = await fetch(apiUrl, {
+                const response = await fetch(backendProxyUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(`API 呼叫失敗: 狀態 ${response.status}, 錯誤: ${JSON.stringify(errorData)}`);
+                }
 
                 const result = await response.json();
 
@@ -259,7 +250,7 @@
                 }
             } catch (error) {
                 displayChatMessage('ai', "發生錯誤，請稍後再試。");
-                console.error("Error calling Gemini API for AI Assistant:", error);
+                console.error("Error calling AI Assistant via proxy:", error);
             } finally {
                 askAiText.classList.remove('hidden');
                 askAiLoading.classList.add('hidden');
