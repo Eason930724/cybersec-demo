@@ -5,15 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>資安互動式闖關平台</title>
     
-    <!-- 確保 CSS 正確載入 -->
     <link rel="stylesheet" href="css/style.css">
     
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Font Awesome - 確保圖示正確載入 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     
     <style>
@@ -31,7 +28,6 @@
         // if (isset($_SESSION['username'])) { ... }
     ?>
 
-    <!-- Header -->
     <header class="header">
         <div class="container">
             <div class="header-content">
@@ -67,40 +63,33 @@
         </div>
     </header>
 
-    <!-- Hero Section -->
     <main class="main">
         <div class="container">
             <section class="hero">
-                <!-- Badge -->
                 <div class="hero-badge">
                     <i class="fas fa-shield-alt"></i>
                     <span>專業資安培訓平台</span>
                 </div>
 
-                <!-- Main Title -->
                 <h1 class="hero-title">
                     資安互動式<span class="gradient-text">闖關平台</span>
                 </h1>
 
-                <!-- Subtitle -->
                 <p class="hero-subtitle">
                     從基礎概念到攻防實戰，打造你的資安實力<br>
                     <span class="highlight">實戰演練 • 技能提升 • 證書認證</span>
                 </p>
 
-                <!-- CTA Buttons -->
                 <div class="hero-actions">
-                   <button class="btn btn-cta" id="startChallengeBtn">
-    <i class="fas fa-crosshairs"></i>
-    立即開始挑戰
-</button>
+                    <button class="btn btn-cta" id="startChallengeBtn"> <i class="fas fa-crosshairs"></i>
+                        立即開始挑戰
+                    </button>
                     <button class="btn btn-outline">
                         <i class="fas fa-book-open"></i>
                         瀏覽課程
                     </button>
                 </div>
 
-                <!-- Feature Cards -->
                 <div class="features">
                     <div class="feature-card">
                         <div class="feature-icon blue">
@@ -127,7 +116,6 @@
                     </div>
                 </div>
 
-                <!-- Stats -->
                 <div class="stats">
                     <div class="stat-item">
                         <div class="stat-number blue">1000+</div>
@@ -150,7 +138,6 @@
         </div>
     </main>
 
-    <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
@@ -164,5 +151,16 @@
     </footer>
 
     <script src="js/script.js"></script>
+    <script>
+        // Add this script directly to index.php or into js/script.js
+        document.addEventListener('DOMContentLoaded', function() {
+            const startChallengeBtn = document.getElementById('startChallengeBtn');
+            if (startChallengeBtn) {
+                startChallengeBtn.addEventListener('click', function() {
+                    window.location.href = 'home1.html';
+                });
+            }
+        });
+    </script>
 </body>
 </html>
