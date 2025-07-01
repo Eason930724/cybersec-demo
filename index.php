@@ -4,9 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>資安互動式闖關平台</title>
+    
+    <!-- 確保 CSS 正確載入 -->
     <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Font Awesome - 確保圖示正確載入 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <style>
+        /* 確保背景立即載入 */
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #0f172a 100%) !important;
+            min-height: 100vh !important;
+        }
+    </style>
 </head>
 <body>
     <?php
@@ -14,8 +30,6 @@
         // session_start();
         // if (isset($_SESSION['username'])) { ... }
     ?>
-
-    <div class="background-overlay"></div>
 
     <!-- Header -->
     <header class="header">
@@ -46,7 +60,6 @@
                     <button class="btn btn-primary">註冊</button>
                 </div>
 
-                <!-- Mobile menu button -->
                 <button class="mobile-menu-btn" id="mobile-menu-btn">
                     <i class="fas fa-bars"></i>
                 </button>
@@ -150,7 +163,6 @@
         </div>
     </footer>
 
-    <!-- 在這裡引用 JavaScript 文件 -->
     <script src="js/script.js"></script>
 </body>
 </html>
