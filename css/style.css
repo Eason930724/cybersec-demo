@@ -1,4 +1,4 @@
-/* 重置樣式 - 確保一致性 */
+/* 重置樣式 */
 * {
   margin: 0;
   padding: 0;
@@ -15,7 +15,6 @@ body {
   color: #ffffff;
   overflow-x: hidden;
   min-height: 100vh;
-  /* 強制深色背景 */
   background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #0f172a 100%) !important;
   background-attachment: fixed;
 }
@@ -252,111 +251,118 @@ body {
   flex-wrap: wrap;
 }
 
-/* 功能卡片 */
+/* 功能卡片 - 強制3欄佈局 */
 .features {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
-  margin-bottom: 4rem;
-  max-width: 1000px;
-  margin-left: auto;
-  margin-right: auto;
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 2rem !important;
+  margin: 4rem auto !important;
+  max-width: 1000px !important;
+  width: 100% !important;
 }
 
 .feature-card {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 1rem;
-  padding: 2rem;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  transition: all 0.3s ease;
-  text-align: center;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 1rem !important;
+  padding: 2rem !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  transition: all 0.3s ease !important;
+  text-align: center !important;
+  min-height: 200px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
 }
 
 .feature-card:hover {
-  background: rgba(255, 255, 255, 0.1);
-  transform: translateY(-5px);
-  border-color: rgba(255, 255, 255, 0.2);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.1) !important;
+  transform: translateY(-5px) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2) !important;
 }
 
 .feature-icon {
-  width: 3rem;
-  height: 3rem;
-  border-radius: 0.75rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 1rem;
-  font-size: 1.5rem;
+  width: 3rem !important;
+  height: 3rem !important;
+  border-radius: 0.75rem !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 auto 1rem !important;
+  font-size: 1.5rem !important;
 }
 
 .feature-icon.blue {
-  background: rgba(59, 130, 246, 0.2);
-  color: #60a5fa;
+  background: rgba(59, 130, 246, 0.2) !important;
+  color: #60a5fa !important;
 }
 
 .feature-icon.green {
-  background: rgba(34, 197, 94, 0.2);
-  color: #4ade80;
+  background: rgba(34, 197, 94, 0.2) !important;
+  color: #4ade80 !important;
 }
 
 .feature-icon.purple {
-  background: rgba(168, 85, 247, 0.2);
-  color: #a855f7;
+  background: rgba(168, 85, 247, 0.2) !important;
+  color: #a855f7 !important;
 }
 
 .feature-card h3 {
-  font-size: 1.25rem;
-  font-weight: 600;
-  margin-bottom: 0.75rem;
-  color: #ffffff;
+  font-size: 1.25rem !important;
+  font-weight: 600 !important;
+  margin-bottom: 0.75rem !important;
+  color: #ffffff !important;
 }
 
 .feature-card p {
-  color: #9ca3af;
-  font-size: 0.875rem;
-  line-height: 1.6;
+  color: #9ca3af !important;
+  font-size: 0.875rem !important;
+  line-height: 1.6 !important;
 }
 
-/* 統計數據 */
+/* 統計數據 - 強制4欄佈局 */
 .stats {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 2rem;
-  padding-top: 4rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  max-width: 800px;
-  margin: 0 auto;
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 2rem !important;
+  padding-top: 4rem !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+  max-width: 800px !important;
+  margin: 0 auto !important;
+  width: 100% !important;
 }
 
 .stat-item {
-  text-align: center;
+  text-align: center !important;
+  padding: 1rem !important;
 }
 
 .stat-number {
-  font-size: 2.5rem;
-  font-weight: 700;
-  margin-bottom: 0.25rem;
+  font-size: 2.5rem !important;
+  font-weight: 700 !important;
+  margin-bottom: 0.25rem !important;
+  display: block !important;
 }
 
 .stat-number.blue {
-  color: #60a5fa;
+  color: #60a5fa !important;
 }
 .stat-number.green {
-  color: #4ade80;
+  color: #4ade80 !important;
 }
 .stat-number.purple {
-  color: #a855f7;
+  color: #a855f7 !important;
 }
 .stat-number.cyan {
-  color: #06b6d4;
+  color: #06b6d4 !important;
 }
 
 .stat-label {
-  color: #9ca3af;
-  font-size: 0.875rem;
+  color: #9ca3af !important;
+  font-size: 0.875rem !important;
+  display: block !important;
 }
 
 /* Footer */
@@ -384,6 +390,18 @@ body {
 }
 
 /* 響應式設計 */
+@media (max-width: 1024px) {
+  .features {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 1.5rem !important;
+  }
+
+  .stats {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 1.5rem !important;
+  }
+}
+
 @media (max-width: 768px) {
   .mobile-menu-btn {
     display: block;
@@ -436,13 +454,13 @@ body {
   }
 
   .features {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
   }
 
   .stats {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 1.5rem !important;
   }
 }
 
@@ -469,12 +487,12 @@ body {
   }
 
   .stats {
-    grid-template-columns: 1fr;
-    gap: 1rem;
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
   }
 
   .stat-number {
-    font-size: 2rem;
+    font-size: 2rem !important;
   }
 }
 
