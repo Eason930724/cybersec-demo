@@ -90,10 +90,10 @@
 
                 <!-- CTA Buttons -->
                 <div class="hero-actions">
-                    <button class="btn btn-cta">
-                        <i class="fas fa-crosshairs"></i>
-                        立即開始挑戰
-                    </button>
+                   <button class="btn btn-cta" id="startChallengeBtn">
+    <i class="fas fa-crosshairs"></i>
+    立即開始挑戰
+</button>
                     <button class="btn btn-outline">
                         <i class="fas fa-book-open"></i>
                         瀏覽課程
