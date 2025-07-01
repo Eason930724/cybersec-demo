@@ -45,11 +45,6 @@
                     <button class="btn btn-ghost">登入</button>
                     <button class="btn btn-primary">註冊</button>
                 </div>
-
-                <!-- Mobile menu button -->
-                <button class="mobile-menu-btn">
-                    <i class="fas fa-bars"></i>
-                </button>
             </div>
         </div>
     </header>
@@ -149,7 +144,5 @@
             </div>
         </div>
     </footer>
-
-    <script src="js/script.js"></script>
 </body>
 </html>
