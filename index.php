@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
@@ -14,7 +17,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     
     <style>
-        /* 確保背景立即載入 */
         body {
             background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #0f172a 100%) !important;
             min-height: 100vh !important;
@@ -22,11 +24,6 @@
     </style>
 </head>
 <body>
-    <?php
-        // 這裡未來可以加上 session 或登入狀態檢查
-        // session_start();
-        // if (isset($_SESSION['username'])) { ... }
-    ?>
 
     <header class="header">
         <div class="container">
@@ -52,8 +49,15 @@
                 </nav>
 
                 <div class="actions">
-                    <button class="btn btn-ghost">登入</button>
-                    <button class="btn btn-primary">註冊</button>
+                    <?php if (isset($_SESSION['username'])): ?>
+                        <span style="color:white; margin-right: 10px;">
+                            歡迎，<?= htmlspecialchars($_SESSION['username']) ?>
+                        </span>
+                        <a href="logout.php" class="btn btn-ghost">登出</a>
+                    <?php else: ?>
+                        <a href="login.php" class="btn btn-ghost">登入</a>
+                        <a href="register.php" class="btn btn-primary">註冊</a>
+                    <?php endif; ?>
                 </div>
 
                 <button class="mobile-menu-btn" id="mobile-menu-btn">
@@ -81,12 +85,11 @@
                 </p>
 
                 <div class="hero-actions">
-                    <button class="btn btn-cta" id="startChallengeBtn"> <i class="fas fa-crosshairs"></i>
-                        立即開始挑戰
+                    <button class="btn btn-cta" id="startChallengeBtn">
+                        <i class="fas fa-crosshairs"></i> 立即開始挑戰
                     </button>
                     <button class="btn btn-outline">
-                        <i class="fas fa-book-open"></i>
-                        瀏覽課程
+                        <i class="fas fa-book-open"></i> 瀏覽課程
                     </button>
                 </div>
 
@@ -150,8 +153,7 @@
         </div>
     </footer>
 
-  <script>
-    // Add this script directly to index.php or into js/script.js
+    <script>
     document.addEventListener('DOMContentLoaded', function() {
         const startChallengeBtn = document.getElementById('startChallengeBtn');
         if (startChallengeBtn) {
@@ -160,7 +162,7 @@
             });
         }
     });
-</script>
+    </script>
 
 </body>
 </html>
