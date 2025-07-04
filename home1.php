@@ -217,9 +217,9 @@
             // Add user's message to chat history
             aiAssistantChatHistory.push({ role: "user", parts: [{ text: prompt }] });
 
-             try {
+              try {
                 const payload = { contents: aiAssistantChatHistory };
-                const apiKey = ""; // Leave this as-is; Canvas will provide the key at runtime.
+                const apiKey = "AIzaSyCPrttlqabJPS-BOIhe21Xq0vwSFEz_XU8"; // Leave this as-is; Canvas will provide the key at runtime.
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
                 const response = await fetch(apiUrl, {
@@ -227,7 +227,6 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 });
-
 
                 if (!response.ok) {
                     const errorData = await response.json();
