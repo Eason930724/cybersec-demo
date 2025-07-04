@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>資安互動闖關平台</title>
+    <title>資安互動闖關平台 (Firebase 整合版)</title>
+    <!-- Tailwind CSS 外部資源 -->
     <script src="https://cdn.tailwindcss.com"></script>
     
+    <!-- CSS 樣式區塊 -->
     <style>
         body {
             font-family: "Inter", sans-serif;
@@ -163,9 +165,11 @@
     </style>
 </head>
 <body class="min-h-screen flex flex-col bg-gray-100">
+    <!-- 頁首 -->
     <header class="bg-gray-800 text-white p-4 shadow-md">
         <div class="container mx-auto flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
             
+            <!-- 課程項目選單 -->
             <div class="relative inline-block text-left" id="course-menu-container">
                 <button type="button" class="concept-block-bg text-white p-3 rounded-lg w-full md:w-auto text-center md:text-left cursor-pointer flex items-center justify-center" id="course-menu-button">
                     課程項目選單
@@ -203,12 +207,16 @@
         </div>
     </header>
 
+    <!-- 主要內容 -->
     <main class="container mx-auto p-4 flex-grow grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <!-- 左欄 -->
         <section class="flex flex-col space-y-4">
+            <!-- 課程內容 -->
             <div id="course-content-area" class="concept-block-bg text-white p-6 rounded-lg shadow-lg flex flex-col justify-center min-h-[300px]">
                 <h2 class="text-2xl font-bold text-center">課程內容</h2>
                 <p class="text-center mt-2">點擊左上角選單以選擇單元。</p>
             </div>
+            <!-- 題目與作答區 -->
             <div id="submission-area" class="concept-block-bg text-white p-6 rounded-lg shadow-lg">
                  <h2 class="text-xl font-bold mb-2 text-center">題目與作答</h2>
                  <div id="question-area" class="mb-4 p-3 bg-gray-700 rounded-md text-sm min-h-[60px]">
@@ -216,14 +224,19 @@
                      <p id="question-text">請從左上角的「課程項目選單」選擇一個單元以開始作答。</p>
                  </div>
                  <h3 class="text-lg font-semibold mb-2">您的答案：</h3>
+                 <!-- 動態作答區容器 -->
                  <div id="answer-format-container" class="min-h-[100px]">
+                    <!-- 簡答題 -->
                     <div id="short-answer-format" class="hidden">
                         <textarea id="submission-input-short" class="w-full p-2 rounded-md text-gray-800 h-24 resize-none" placeholder="請在此輸入您的答案..."></textarea>
                     </div>
+                    <!-- 選擇題 -->
                     <div id="multiple-choice-format" class="hidden space-y-2">
                     </div>
+                    <!-- 填充題 -->
                     <div id="fill-in-blank-format" class="hidden items-center text-lg">
                     </div>
+                    <!-- 圖片上傳 -->
                     <div id="image-upload-format" class="hidden">
                         <input type="file" id="submission-input-image" class="hidden" accept="image/*">
                         <label for="submission-input-image" id="image-upload-label">選擇圖片</label>
@@ -237,8 +250,11 @@
             </div>
         </section>
 
+        <!-- 右欄 -->
         <section class="flex flex-col space-y-4">
+            <!-- 虛擬機區塊 -->
             <div id="vm-section" class="concept-block-bg text-white p-6 rounded-lg shadow-lg flex flex-col flex-grow">
+                <!-- 狀態一: 啟動前 -->
                 <div id="vm-off-state">
                     <h2 class="text-2xl font-bold border-b border-gray-400 pb-2 mb-4">任務：駭入你的第一台機器</h2>
                     <p class="mb-4 text-gray-200">在本次任務中，我們為您準備了一個名為 "Fakebank" 的應用程式，您可以安全地對其進行駭客攻擊練習。</p>
@@ -248,6 +264,7 @@
                     </button>
                 </div>
 
+                <!-- 狀態二: 啟動後 (預設隱藏) -->
                 <div id="vm-on-state" class="hidden">
                     <div class="bg-red-700 text-white font-bold p-3 rounded-t-lg -m-6 mb-6">
                         目標靶機資訊
@@ -280,12 +297,14 @@
         </section>
     </main>
 
+    <!-- 頁尾 -->
     <footer class="bg-gray-800 text-white p-4 mt-4 shadow-inner">
         <div class="container mx-auto text-center text-lg font-semibold">
             資安互動闖關
         </div>
     </footer>
 
+    <!-- 懸浮 AI 助理 -->
     <div id="floating-ai-assistant" class="concept-block-bg text-white p-3 rounded-lg shadow-lg">
         <div id="ai-assistant-toggle-button" title="開啟/關閉AI助理">
             🤖
@@ -303,76 +322,38 @@
         </div>
     </div>
     
+    <!-- 自訂訊息提示框 -->
     <div id="custom-alert"></div>
 
-
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-firestore-compat.js"></script>
+    
+    <script>
+      // !!! 重要 !!!
+      // 請將下方物件替換成您在 Firebase 控制台中取得的真實設定
+      const firebaseConfig = {
+        apiKey: "AIzaSyXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+        authDomain: "your-project-id.firebaseapp.com",
+        projectId: "your-project-id",
+        storageBucket: "your-project-id.appspot.com",
+        messagingSenderId: "1234567890",
+        appId: "1:1234567890:web:xxxxxxxxxxxxxxxxx"
+      };
+    
+      // 初始化 Firebase
+      firebase.initializeApp(firebaseConfig);
+      const db = firebase.firestore(); // 初始化 Firestore
+    </script>
+    
+    <!-- 主要 JavaScript 腳本 -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-
-            const questions = {
-                unit1: {
-                    type: 'multiple_choice',
-                    question: "以下何者是釣魚郵件最典型的特徵？",
-                    options: ["寄件者是您認識的朋友", "信件主旨非常緊急，要求您立即採取行動", "信件內容有拼寫或語法錯誤", "以上皆是"],
-                    correctAnswer: 3,
-                    timeLimit: 60
-                },
-                unit2: {
-                    type: 'short_answer',
-                    question: "什麼是勒索軟體 (Ransomware)？如果您的電腦感染了勒索軟體，您應該支付贖金嗎？請說明您的理由。",
-                    timeLimit: 180
-                },
-                unit3: {
-                    type: 'fill_in_blank',
-                    question_parts: ["一個安全的密碼通常建議包含大寫字母、小寫字母、數字和", "。"],
-                    correctAnswer: "特殊符號",
-                    timeLimit: 90
-                },
-                unit4: {
-                    type: 'short_answer',
-                    question: "社交工程 (Social Engineering) 是什麼意思？駭客可能會如何利用社交媒體平台（如 Facebook 或 Instagram）進行社交工程攻擊？",
-                    timeLimit: 180
-                },
-                unit5: {
-                    type: 'multiple_choice',
-                    question: "在不同網站使用相同的密碼，會導致哪種主要的資安風險？",
-                    options: ["撞庫攻擊 (Credential Stuffing)", "阻斷服務攻擊 (DoS)", "SQL 資料隱碼攻擊 (SQL Injection)", "跨站腳本攻擊 (XSS)"],
-                    correctAnswer: 0,
-                    timeLimit: 60
-                },
-                unit6: {
-                    type: 'short_answer',
-                    question: "當您在咖啡廳或機場使用公用 Wi-Fi 時，存在哪些潛在的安全風險？您會採取哪些措施來保護您的網路活動？",
-                    timeLimit: 120
-                },
-                unit7: {
-                    type: 'image_upload',
-                    question: "假設您正在對一個可疑程式進行逆向分析。請上傳您使用除錯器 (Debugger) 找到關鍵判斷式（例如，檢查註冊碼是否正確）的畫面截圖。",
-                    timeLimit: 300
-                },
-                unit8: {
-                    type: 'short_answer',
-                    question: "將檔案儲存在雲端（例如 Google Drive, Dropbox）和儲存在您自己的電腦硬碟中，各有哪些主要的資安優缺點？",
-                    timeLimit: 120
-                },
-                unit9: {
-                    type: 'fill_in_blank',
-                    question_parts: ["為了保護您的智慧音箱不被竊聽，最簡單直接的方法之一就是定期檢查並更新其", "。"],
-                    correctAnswer: "韌體",
-                    timeLimit: 90
-                },
-                unit10: {
-                    type: 'short_answer',
-                    question: "綜合所有單元，請分享三個您認為最重要的個人資訊安全習慣，並簡要說明原因。",
-                    timeLimit: 240
-                }
-            };
 
             let currentQuestion = null;
             let aiAssistantChatHistory = [];
             let quizCountdownInterval = null;
             let quizTimeRemaining = 0;
-            // NEW: 虛擬機計時器變數
             let machineCountdownInterval = null;
             let machineTimeRemaining = 0;
 
@@ -465,9 +446,28 @@
                 }
             });
 
-            function updateQuestionDisplay(unitId) {
-                currentQuestion = questions[unitId];
+            async function updateQuestionDisplay(unitId) {
+                currentQuestion = null;
+                showCustomAlert('正在從資料庫獲取題目...', 'info');
+
+                try {
+                    const docRef = db.collection('questions').doc(unitId);
+                    const doc = await docRef.get();
+            
+                    if (doc.exists) {
+                        currentQuestion = doc.data();
+                        showCustomAlert('題目獲取成功！', 'success');
+                    } else {
+                        throw new Error(`在資料庫中找不到 ID 為 ${unitId} 的題目`);
+                    }
+                } catch (error) {
+                    console.error('獲取題目失敗:', error);
+                    showCustomAlert('獲取題目失敗，請確認 Firebase 設定是否正確。', 'error');
+                    return;
+                }
+            
                 if (!currentQuestion) return;
+
                 const questionTextElement = document.getElementById('question-text');
                 const courseContentArea = document.getElementById('course-content-area');
                 document.getElementById('short-answer-format').classList.add('hidden');
@@ -603,7 +603,6 @@
                 return `${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
             }
 
-            // NEW: 虛擬機相關邏輯
             const vmOffState = document.getElementById('vm-off-state');
             const vmOnState = document.getElementById('vm-on-state');
             const startMachineButton = document.getElementById('start-machine-button');
@@ -615,16 +614,15 @@
             startMachineButton.addEventListener('click', () => {
                 vmOffState.classList.add('hidden');
                 vmOnState.classList.remove('hidden');
-                // 生成隨機 IP
                 const randomIp = `10.10.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}`;
                 targetIpDisplay.textContent = randomIp;
-                startMachineTimer(3600); // 啟動1小時倒數
+                startMachineTimer(3600);
             });
 
             terminateMachineButton.addEventListener('click', () => {
                 vmOnState.classList.add('hidden');
                 vmOffState.classList.remove('hidden');
-                clearInterval(machineCountdownInterval); // 停止計時
+                clearInterval(machineCountdownInterval);
                 document.getElementById('machine-countdown').textContent = '--:--';
             });
 
@@ -653,7 +651,7 @@
                     timerDisplay.textContent = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
                 };
 
-                update(); // 立即更新一次
+                update();
 
                 machineCountdownInterval = setInterval(() => {
                     machineTimeRemaining--;
