@@ -217,18 +217,17 @@
             // Add user's message to chat history
             aiAssistantChatHistory.push({ role: "user", parts: [{ text: prompt }] });
 
-            try {
-                // 將請求發送到你的後端代理伺服器
-                // 請確保這個 URL 與你的後端伺服器實際運行的地址和埠號相符
-                const backendProxyUrl = 'http://localhost:3000/api/gemini-chat'; 
-                
+             try {
                 const payload = { contents: aiAssistantChatHistory };
+                const apiKey = ""; // Leave this as-is; Canvas will provide the key at runtime.
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
-                const response = await fetch(backendProxyUrl, {
+                const response = await fetch(apiUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 });
+
 
                 if (!response.ok) {
                     const errorData = await response.json();
