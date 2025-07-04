@@ -13,17 +13,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (password_verify($password, $row['password'])) {
             $_SESSION['username'] = $row['username'];
             echo "<script>
-                alert('🎉 登入成功！');
+                alert('🎉 登入成功！將返回首頁');
                 window.location.href = 'index.php';
             </script>";
+            exit;
         } else {
-            echo "❌ 密碼錯誤";
+            echo "<p style='color:red;'>❌ 密碼錯誤</p>";
         }
     } else {
-        echo "❌ 查無此帳號";
+        echo "<p style='color:red;'>❌ 查無此帳號</p>";
     }
 }
 ?>
+
 <!-- 登入表單 -->
 <h2>使用者登入</h2>
 <form method="post">
