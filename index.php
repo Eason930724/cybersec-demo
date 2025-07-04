@@ -184,44 +184,33 @@ session_start();
             position: relative;
             display: inline-block;
         }
-        
+
         .course-menu {
             position: absolute;
             top: 100%;
-            left: 50%;
-            transform: translateX(-50%);
+            left: 0;
             background: white;
             border-radius: 12px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
             min-width: 280px;
             max-width: 320px;
-            z-index: 100;
+            z-index: 1001;
             opacity: 0;
             visibility: hidden;
-            transform: translateX(-50%) translateY(-10px);
+            transform: translateY(-10px);
             transition: all 0.3s ease;
             margin-top: 8px;
         }
-        
+
         .course-menu.show {
             opacity: 1;
             visibility: visible;
-            transform: translateX(-50%) translateY(0);
-        }
-        
-        .course-menu-header {
-            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-            color: white;
-            padding: 16px 20px;
-            border-radius: 12px 12px 0 0;
-            text-align: center;
-            font-weight: 600;
-            font-size: 16px;
+            transform: translateY(0);
         }
         
         .course-list {
             padding: 8px 0;
-            max-height: 400px;
+            max-height: 300px;
             overflow-y: auto;
         }
         
@@ -326,8 +315,14 @@ session_start();
             }
             
             .course-menu {
+                left: 50%;
+                transform: translateX(-50%) translateY(-10px);
                 min-width: 260px;
                 max-width: 90vw;
+            }
+            
+            .course-menu.show {
+                transform: translateX(-50%) translateY(0);
             }
             
             .course-item {
@@ -336,6 +331,21 @@ session_start();
             
             .course-item:hover {
                 padding-left: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .course-menu {
+                left: 0;
+                right: 0;
+                transform: translateY(-10px);
+                margin: 8px 10px 0 10px;
+                min-width: auto;
+                max-width: none;
+            }
+            
+            .course-menu.show {
+                transform: translateY(0);
             }
         }
     </style>
