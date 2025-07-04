@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['username'] = $row['username'];
             echo "<script>
                 alert('🎉 登入成功！');
-                window.location.href = 'home1.php';
+                window.location.href = 'index.php';
             </script>";
         } else {
             echo "❌ 密碼錯誤";
