@@ -95,7 +95,7 @@
             background-color: #1d4ed8;
         }
 
-        /* NEW: 選擇題樣式 */
+        /* 選擇題樣式 */
         .choice-label {
             display: block;
             background-color: rgba(255,255,255,0.1);
@@ -112,7 +112,7 @@
             margin-right: 0.75rem;
         }
 
-        /* NEW: 填充題輸入框樣式 */
+        /* 填充題輸入框樣式 */
         #fill-in-blank-input {
             background-color: #f0f0f0;
             color: #1f2937;
@@ -127,7 +127,7 @@
             border-color: #60a5fa;
         }
 
-        /* NEW: 圖片上傳按鈕樣式 */
+        /* 圖片上傳按鈕樣式 */
         #image-upload-label {
             background-color: #4f46e5;
             color: white;
@@ -147,7 +147,7 @@
             border: 2px dashed rgba(255,255,255,0.3);
         }
 
-        /* NEW: 自訂訊息提示框 */
+        /* 自訂訊息提示框 */
         #custom-alert {
             position: fixed;
             top: -100px; /* 初始位置在螢幕外 */
@@ -232,7 +232,7 @@
                      <p id="question-text">請從左上角的「課程項目選單」選擇一個單元以開始作答。</p>
                  </div>
                  <h3 class="text-lg font-semibold mb-2">您的答案：</h3>
-                 <!-- NEW: 動態作答區容器 -->
+                 <!-- 動態作答區容器 -->
                  <div id="answer-format-container" class="min-h-[100px]">
                     <!-- 簡答題 -->
                     <div id="short-answer-format" class="hidden">
@@ -240,11 +240,9 @@
                     </div>
                     <!-- 選擇題 -->
                     <div id="multiple-choice-format" class="hidden space-y-2">
-                        <!-- 選項將由 JS 動態生成 -->
                     </div>
                     <!-- 填充題 -->
                     <div id="fill-in-blank-format" class="hidden items-center text-lg">
-                        <!-- 填充題內容將由 JS 動態生成 -->
                     </div>
                     <!-- 圖片上傳 -->
                     <div id="image-upload-format" class="hidden">
@@ -313,7 +311,6 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
 
-            // UPDATED: 全新的題目資料庫，包含多種題型
             const questions = {
                 unit1: {
                     type: 'multiple_choice',
@@ -324,7 +321,7 @@
                         "信件內容有拼寫或語法錯誤",
                         "以上皆是"
                     ],
-                    correctAnswer: 3 // '以上皆是' 的索引是 3
+                    correctAnswer: 3
                 },
                 unit2: {
                     type: 'short_answer',
@@ -373,13 +370,14 @@
                 }
             };
 
-            // 用於追蹤當前題目資訊
             let currentQuestion = null;
+            // FIXED: 恢復對話歷史紀錄變數
+            let aiAssistantChatHistory = [];
 
-            // 模擬 AI 助理的回應
+            // FIXED: AI 助理功能恢復為真實 API 呼叫
             const askAiButton = document.getElementById('ask-ai-button');
             if(askAiButton) {
-                askAiButton.addEventListener('click', () => {
+                askAiButton.addEventListener('click', async () => {
                     const inputElement = document.getElementById('ai-assistant-input');
                     const askAiText = document.getElementById('ask-ai-text');
                     const askAiLoading = document.getElementById('ask-ai-loading');
@@ -389,20 +387,47 @@
                         displayChatMessage('ai', "請輸入您的問題。");
                         return;
                     }
+
                     displayChatMessage('user', prompt);
+                    aiAssistantChatHistory.push({ role: "user", parts: [{ text: prompt }] });
                     inputElement.value = '';
+
                     askAiText.classList.add('hidden');
                     askAiLoading.classList.remove('hidden');
                     askAiButton.disabled = true;
 
-                    setTimeout(() => {
-                        const aiResponse = `這是針對「${prompt}」的模擬回應。在實際應用中，這裡會是來自AI的真實答案。`;
-                        displayChatMessage('ai', aiResponse);
-                        
+                    try {
+                        const payload = { contents: aiAssistantChatHistory };
+                        const apiKey = ""; // 將由 Canvas 執行環境提供
+                        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+                        const response = await fetch(apiUrl, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        });
+
+                        if (!response.ok) {
+                            throw new Error(`API 呼叫失敗，狀態碼: ${response.status}`);
+                        }
+
+                        const result = await response.json();
+
+                        if (result.candidates && result.candidates.length > 0) {
+                            const text = result.candidates[0].content.parts[0].text;
+                            displayChatMessage('ai', text);
+                            aiAssistantChatHistory.push({ role: "model", parts: [{ text: text }] });
+                        } else {
+                            displayChatMessage('ai', "抱歉，AI 未能生成回應。");
+                        }
+                    } catch (error) {
+                        console.error("呼叫 AI 助理時發生錯誤:", error);
+                        displayChatMessage('ai', "抱歉，連線時發生錯誤，請稍後再試。");
+                    } finally {
                         askAiText.classList.remove('hidden');
                         askAiLoading.classList.add('hidden');
                         askAiButton.disabled = false;
-                    }, 1500);
+                    }
                 });
             }
 
@@ -434,7 +459,6 @@
                 });
             }
 
-            // 處理答案提交
             const submitAnswerButton = document.getElementById('submit-answer-button');
             if(submitAnswerButton) {
                 submitAnswerButton.addEventListener('click', checkAnswer);
@@ -449,7 +473,6 @@
                 });
             }
 
-            // 處理點擊課程單元後的邏輯
             const courseLinks = document.querySelectorAll('#course-dropdown a');
             courseLinks.forEach(link => {
                 link.addEventListener('click', (event) => {
@@ -469,7 +492,6 @@
                 }
             });
 
-            // NEW: 更新題目顯示的函式
             function updateQuestionDisplay(unitId) {
                 currentQuestion = questions[unitId];
                 if (!currentQuestion) return;
@@ -477,18 +499,15 @@
                 const questionTextElement = document.getElementById('question-text');
                 const courseContentArea = document.getElementById('course-content-area');
                 
-                // 隱藏所有作答區塊
                 document.getElementById('short-answer-format').classList.add('hidden');
                 document.getElementById('multiple-choice-format').classList.add('hidden');
                 document.getElementById('fill-in-blank-format').classList.add('hidden');
                 document.getElementById('image-upload-format').classList.add('hidden');
 
-                // 更新課程內容區塊
                 const unitTitle = document.querySelector(`[data-unit-id="${unitId}"]`).textContent;
                 courseContentArea.querySelector('h2').textContent = unitTitle;
                 courseContentArea.querySelector('p').textContent = "請閱讀下方題目，並在作答區塊提交您的答案。";
 
-                // 根據題型顯示對應的作答區塊
                 switch (currentQuestion.type) {
                     case 'short_answer':
                         questionTextElement.textContent = currentQuestion.question;
@@ -499,7 +518,7 @@
                     case 'multiple_choice':
                         questionTextElement.textContent = currentQuestion.question;
                         const mcContainer = document.getElementById('multiple-choice-format');
-                        mcContainer.innerHTML = ''; // 清空舊選項
+                        mcContainer.innerHTML = '';
                         currentQuestion.options.forEach((option, index) => {
                             const label = document.createElement('label');
                             label.className = 'choice-label';
@@ -512,7 +531,7 @@
                     case 'fill_in_blank':
                         questionTextElement.textContent = "請完成以下句子：";
                         const fibContainer = document.getElementById('fill-in-blank-format');
-                        fibContainer.innerHTML = ''; // 清空舊內容
+                        fibContainer.innerHTML = '';
                         fibContainer.appendChild(document.createTextNode(currentQuestion.question_parts[0]));
                         const input = document.createElement('input');
                         input.type = 'text';
@@ -526,7 +545,6 @@
                         questionTextElement.textContent = currentQuestion.question;
                         const iuContainer = document.getElementById('image-upload-format');
                         iuContainer.classList.remove('hidden');
-                        // 重設檔案上傳狀態
                         document.getElementById('submission-input-image').value = '';
                         document.getElementById('image-filename').textContent = '尚未選擇檔案';
                         document.getElementById('image-preview').classList.add('hidden');
@@ -534,7 +552,6 @@
                 }
             }
             
-            // NEW: 處理圖片預覽
             const imageInput = document.getElementById('submission-input-image');
             if(imageInput) {
                 imageInput.addEventListener('change', (event) => {
@@ -552,7 +569,6 @@
                 });
             }
 
-            // NEW: 檢查答案的函式
             function checkAnswer() {
                 if (!currentQuestion) {
                     showCustomAlert("請先選擇一個單元！", "error");
@@ -570,7 +586,7 @@
                         } else {
                             showCustomAlert("請輸入您的答案！", "error");
                         }
-                        return; // 簡答題不直接判斷對錯
+                        return;
 
                     case 'multiple_choice':
                         const selectedOption = document.querySelector('input[name="mc-option"]:checked');
@@ -597,9 +613,7 @@
                         const fileInput = document.getElementById('submission-input-image');
                         if (fileInput.files.length > 0) {
                             showCustomAlert("圖片已提交，模擬分析中...", "success");
-                            // 模擬分析結果
                             setTimeout(() => {
-                                // 隨機給出成功或失敗的提示
                                 const randomSuccess = Math.random() > 0.5;
                                 showCustomAlert(randomSuccess ? "分析完成：操作正確！" : "分析完成：操作有誤！", randomSuccess ? "success" : "error");
                             }, 1500);
@@ -616,16 +630,15 @@
                 }
             }
 
-            // NEW: 顯示自訂訊息提示框
             function showCustomAlert(message, type) {
                 const alertBox = document.getElementById('custom-alert');
                 alertBox.textContent = message;
-                alertBox.className = type; // 'success' or 'error'
+                alertBox.className = type;
                 alertBox.classList.add('show');
 
                 setTimeout(() => {
                     alertBox.classList.remove('show');
-                }, 3000); // 3秒後自動消失
+                }, 3000);
             }
         });
     </script>
