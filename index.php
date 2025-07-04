@@ -179,45 +179,98 @@ session_start();
             box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
         }
         
-        /* 課程下拉選單樣式 */
+        /* 課程下拉選單樣式 - 改為覆蓋式設計 */
         .course-dropdown {
             position: relative;
             display: inline-block;
         }
 
-        .course-menu {
-            position: absolute;
-            top: 100%;
+        /* 課程選單背景遮罩 */
+        .course-menu-overlay {
+            position: fixed;
+            top: 0;
             left: 0;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-            min-width: 280px;
-            max-width: 320px;
-            z-index: 1001;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 999;
             opacity: 0;
             visibility: hidden;
-            transform: translateY(-10px);
             transition: all 0.3s ease;
-            margin-top: 8px;
+        }
+
+        .course-menu-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .course-menu {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            min-width: 320px;
+            max-width: 400px;
+            width: 90vw;
+            max-height: 80vh;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
         }
 
         .course-menu.show {
             opacity: 1;
             visibility: visible;
-            transform: translateY(0);
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .course-menu-header {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+            padding: 20px;
+            border-radius: 16px 16px 0 0;
+            text-align: center;
+            font-weight: 600;
+            font-size: 18px;
+            position: relative;
+        }
+
+        .course-menu-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .course-menu-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
         }
         
         .course-list {
-            padding: 8px 0;
-            max-height: 300px;
+            padding: 12px 0;
+            max-height: 60vh;
             overflow-y: auto;
         }
         
         .course-item {
             display: flex;
             align-items: center;
-            padding: 12px 20px;
+            padding: 16px 24px;
             cursor: pointer;
             transition: all 0.2s ease;
             border-bottom: 1px solid #f1f5f9;
@@ -225,7 +278,7 @@ session_start();
         
         .course-item:hover {
             background: #f8fafc;
-            padding-left: 24px;
+            padding-left: 28px;
         }
         
         .course-item:last-child {
@@ -235,15 +288,15 @@ session_start();
         .course-number {
             background: linear-gradient(135deg, #3b82f6, #1d4ed8);
             color: white;
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 12px;
+            font-size: 14px;
             font-weight: 600;
-            margin-right: 12px;
+            margin-right: 16px;
             flex-shrink: 0;
         }
         
@@ -252,20 +305,20 @@ session_start();
         }
         
         .course-title {
-            font-weight: 500;
+            font-weight: 600;
             color: #1f2937;
-            font-size: 14px;
-            margin-bottom: 2px;
+            font-size: 15px;
+            margin-bottom: 4px;
         }
         
         .course-subtitle {
             color: #6b7280;
-            font-size: 12px;
+            font-size: 13px;
         }
         
         .course-arrow {
             color: #9ca3af;
-            font-size: 12px;
+            font-size: 14px;
             opacity: 0;
             transition: all 0.2s ease;
         }
@@ -315,37 +368,43 @@ session_start();
             }
             
             .course-menu {
-                left: 50%;
-                transform: translateX(-50%) translateY(-10px);
-                min-width: 260px;
-                max-width: 90vw;
+                min-width: 300px;
+                width: 95vw;
+                max-height: 85vh;
             }
             
-            .course-menu.show {
-                transform: translateX(-50%) translateY(0);
+            .course-menu-header {
+                padding: 16px;
+                font-size: 16px;
             }
             
             .course-item {
-                padding: 10px 16px;
+                padding: 14px 20px;
             }
             
             .course-item:hover {
-                padding-left: 20px;
+                padding-left: 24px;
             }
         }
 
         @media (max-width: 480px) {
             .course-menu {
-                left: 0;
-                right: 0;
-                transform: translateY(-10px);
-                margin: 8px 10px 0 10px;
-                min-width: auto;
-                max-width: none;
+                min-width: 280px;
+                width: 95vw;
             }
             
-            .course-menu.show {
-                transform: translateY(0);
+            .course-number {
+                width: 32px;
+                height: 32px;
+                font-size: 12px;
+            }
+            
+            .course-title {
+                font-size: 14px;
+            }
+            
+            .course-subtitle {
+                font-size: 12px;
             }
         }
     </style>
@@ -398,6 +457,9 @@ session_start();
             </div>
         </div>
     </div>
+
+    <!-- 課程選單背景遮罩 -->
+    <div class="course-menu-overlay" id="courseMenuOverlay"></div>
 
     <header class="header">
         <div class="container">
@@ -460,93 +522,6 @@ session_start();
                         <button class="btn btn-outline" id="browseCourseBtn">
                             <i class="fas fa-book-open"></i> 瀏覽課程
                         </button>
-                        <div class="course-menu" id="courseMenu">
-                            <div class="course-menu-header">
-                                <i class="fas fa-graduation-cap"></i> 課程項目選單
-                            </div>
-                            <div class="course-list">
-                                <div class="course-item" data-course="unit1">
-                                    <div class="course-number">1</div>
-                                    <div class="course-info">
-                                        <div class="course-title">網路釣魚防範</div>
-                                        <div class="course-subtitle">識別和防範釣魚攻擊</div>
-                                    </div>
-                                    <i class="fas fa-chevron-right course-arrow"></i>
-                                </div>
-                                <div class="course-item" data-course="unit2">
-                                    <div class="course-number">2</div>
-                                    <div class="course-info">
-                                        <div class="course-title">惡意軟體識別</div>
-                                        <div class="course-subtitle">認識各種惡意軟體類型</div>
-                                    </div>
-                                    <i class="fas fa-chevron-right course-arrow"></i>
-                                </div>
-                                <div class="course-item" data-course="unit3">
-                                    <div class="course-number">3</div>
-                                    <div class="course-info">
-                                        <div class="course-title">強化密碼安全</div>
-                                        <div class="course-subtitle">建立安全的密碼策略</div>
-                                    </div>
-                                    <i class="fas fa-chevron-right course-arrow"></i>
-                                </div>
-                                <div class="course-item" data-course="unit4">
-                                    <div class="course-number">4</div>
-                                    <div class="course-info">
-                                        <div class="course-title">社交工程陷阱</div>
-                                        <div class="course-subtitle">防範社交工程攻擊</div>
-                                    </div>
-                                    <i class="fas fa-chevron-right course-arrow"></i>
-                                </div>
-                                <div class="course-item" data-course="unit5">
-                                    <div class="course-number">5</div>
-                                    <div class="course-info">
-                                        <div class="course-title">保護個人資料</div>
-                                        <div class="course-subtitle">個人隱私保護策略</div>
-                                    </div>
-                                    <i class="fas fa-chevron-right course-arrow"></i>
-                                </div>
-                                <div class="course-item" data-course="unit6">
-                                    <div class="course-number">6</div>
-                                    <div class="course-info">
-                                        <div class="course-title">公用 Wi-Fi 安全</div>
-                                        <div class="course-subtitle">安全使用公共網路</div>
-                                    </div>
-                                    <i class="fas fa-chevron-right course-arrow"></i>
-                                </div>
-                                <div class="course-item" data-course="unit7">
-                                    <div class="course-number">7</div>
-                                    <div class="course-info">
-                                        <div class="course-title">行動裝置安全</div>
-                                        <div class="course-subtitle">手機和平板安全設定</div>
-                                    </div>
-                                    <i class="fas fa-chevron-right course-arrow"></i>
-                                </div>
-                                <div class="course-item" data-course="unit8">
-                                    <div class="course-number">8</div>
-                                    <div class="course-info">
-                                        <div class="course-title">雲端儲存風險</div>
-                                        <div class="course-subtitle">雲端服務安全使用</div>
-                                    </div>
-                                    <i class="fas fa-chevron-right course-arrow"></i>
-                                </div>
-                                <div class="course-item" data-course="unit9">
-                                    <div class="course-number">9</div>
-                                    <div class="course-info">
-                                        <div class="course-title">物聯網(IoT)安全</div>
-                                        <div class="course-subtitle">智慧裝置安全防護</div>
-                                    </div>
-                                    <i class="fas fa-chevron-right course-arrow"></i>
-                                </div>
-                                <div class="course-item" data-course="unit10">
-                                    <div class="course-number">10</div>
-                                    <div class="course-info">
-                                        <div class="course-title">安全總複習</div>
-                                        <div class="course-subtitle">綜合安全知識測驗</div>
-                                    </div>
-                                    <i class="fas fa-chevron-right course-arrow"></i>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <div class="features">
@@ -594,6 +569,98 @@ session_start();
         </div>
     </main>
 
+    <!-- 課程選單 -->
+    <div class="course-menu" id="courseMenu">
+        <div class="course-menu-header">
+            <i class="fas fa-graduation-cap"></i> 課程項目選單
+            <button class="course-menu-close" id="courseMenuClose">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="course-list">
+            <div class="course-item" data-course="unit1">
+                <div class="course-number">1</div>
+                <div class="course-info">
+                    <div class="course-title">網路釣魚防範</div>
+                    <div class="course-subtitle">識別和防範釣魚攻擊</div>
+                </div>
+                <i class="fas fa-chevron-right course-arrow"></i>
+            </div>
+            <div class="course-item" data-course="unit2">
+                <div class="course-number">2</div>
+                <div class="course-info">
+                    <div class="course-title">惡意軟體識別</div>
+                    <div class="course-subtitle">認識各種惡意軟體類型</div>
+                </div>
+                <i class="fas fa-chevron-right course-arrow"></i>
+            </div>
+            <div class="course-item" data-course="unit3">
+                <div class="course-number">3</div>
+                <div class="course-info">
+                    <div class="course-title">強化密碼安全</div>
+                    <div class="course-subtitle">建立安全的密碼策略</div>
+                </div>
+                <i class="fas fa-chevron-right course-arrow"></i>
+            </div>
+            <div class="course-item" data-course="unit4">
+                <div class="course-number">4</div>
+                <div class="course-info">
+                    <div class="course-title">社交工程陷阱</div>
+                    <div class="course-subtitle">防範社交工程攻擊</div>
+                </div>
+                <i class="fas fa-chevron-right course-arrow"></i>
+            </div>
+            <div class="course-item" data-course="unit5">
+                <div class="course-number">5</div>
+                <div class="course-info">
+                    <div class="course-title">保護個人資料</div>
+                    <div class="course-subtitle">個人隱私保護策略</div>
+                </div>
+                <i class="fas fa-chevron-right course-arrow"></i>
+            </div>
+            <div class="course-item" data-course="unit6">
+                <div class="course-number">6</div>
+                <div class="course-info">
+                    <div class="course-title">公用 Wi-Fi 安全</div>
+                    <div class="course-subtitle">安全使用公共網路</div>
+                </div>
+                <i class="fas fa-chevron-right course-arrow"></i>
+            </div>
+            <div class="course-item" data-course="unit7">
+                <div class="course-number">7</div>
+                <div class="course-info">
+                    <div class="course-title">行動裝置安全</div>
+                    <div class="course-subtitle">手機和平板安全設定</div>
+                </div>
+                <i class="fas fa-chevron-right course-arrow"></i>
+            </div>
+            <div class="course-item" data-course="unit8">
+                <div class="course-number">8</div>
+                <div class="course-info">
+                    <div class="course-title">雲端儲存風險</div>
+                    <div class="course-subtitle">雲端服務安全使用</div>
+                </div>
+                <i class="fas fa-chevron-right course-arrow"></i>
+            </div>
+            <div class="course-item" data-course="unit9">
+                <div class="course-number">9</div>
+                <div class="course-info">
+                    <div class="course-title">物聯網(IoT)安全</div>
+                    <div class="course-subtitle">智慧裝置安全防護</div>
+                </div>
+                <i class="fas fa-chevron-right course-arrow"></i>
+            </div>
+            <div class="course-item" data-course="unit10">
+                <div class="course-number">10</div>
+                <div class="course-info">
+                    <div class="course-title">安全總複習</div>
+                    <div class="course-subtitle">綜合安全知識測驗</div>
+                </div>
+                <i class="fas fa-chevron-right course-arrow"></i>
+            </div>
+        </div>
+    </div>
+
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
@@ -621,6 +688,8 @@ session_start();
         // 課程下拉選單相關元素
         const browseCourseBtn = document.getElementById('browseCourseBtn');
         const courseMenu = document.getElementById('courseMenu');
+        const courseMenuOverlay = document.getElementById('courseMenuOverlay');
+        const courseMenuClose = document.getElementById('courseMenuClose');
         const courseItems = document.querySelectorAll('.course-item');
         
         let selectedOption = null;
@@ -640,7 +709,21 @@ session_start();
         if (browseCourseBtn) {
             browseCourseBtn.addEventListener('click', function(e) {
                 e.stopPropagation();
-                toggleCourseMenu();
+                showCourseMenu();
+            });
+        }
+        
+        // 關閉按鈕
+        if (courseMenuClose) {
+            courseMenuClose.addEventListener('click', function() {
+                hideCourseMenu();
+            });
+        }
+        
+        // 背景遮罩點擊關閉
+        if (courseMenuOverlay) {
+            courseMenuOverlay.addEventListener('click', function() {
+                hideCourseMenu();
             });
         }
         
@@ -664,29 +747,19 @@ session_start();
             });
         });
         
-        // 顯示/隱藏課程選單
-        function toggleCourseMenu() {
-            if (courseMenu.classList.contains('show')) {
-                hideCourseMenu();
-            } else {
-                showCourseMenu();
-            }
-        }
-        
+        // 顯示課程選單
         function showCourseMenu() {
+            courseMenuOverlay.classList.add('show');
             courseMenu.classList.add('show');
+            document.body.style.overflow = 'hidden';
         }
         
+        // 隱藏課程選單
         function hideCourseMenu() {
+            courseMenuOverlay.classList.remove('show');
             courseMenu.classList.remove('show');
+            document.body.style.overflow = 'auto';
         }
-        
-        // 點擊其他地方關閉課程選單
-        document.addEventListener('click', function(e) {
-            if (!browseCourseBtn.contains(e.target) && !courseMenu.contains(e.target)) {
-                hideCourseMenu();
-            }
-        });
         
         // 模態框相關功能
         function showChoiceModal() {
