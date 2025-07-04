@@ -330,15 +330,16 @@
     <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-firestore-compat.js"></script>
     
     <script>
-      // !!! 重要 !!!
-      // 請將下方物件替換成您在 Firebase 控制台中取得的真實設定
+      // FIXED: 已更新為您提供的 Firebase 設定
       const firebaseConfig = {
-        apiKey: "AIzaSyXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-        authDomain: "your-project-id.firebaseapp.com",
-        projectId: "your-project-id",
-        storageBucket: "your-project-id.appspot.com",
-        messagingSenderId: "1234567890",
-        appId: "1:1234567890:web:xxxxxxxxxxxxxxxxx"
+        apiKey: "AIzaSyBeR4aJ-Szglo8Zp9DgYE72Nh9sE84mfyg",
+        authDomain: "mysql-c91c5.firebaseapp.com",
+        databaseURL: "https://mysql-c91c5-default-rtdb.firebaseio.com",
+        projectId: "mysql-c91c5",
+        storageBucket: "mysql-c91c5.appspot.com",
+        messagingSenderId: "500921868491",
+        appId: "1:500921868491:web:557faa66ae81437e463b4e",
+        measurementId: "G-17S69HDYGS"
       };
     
       // 初始化 Firebase
