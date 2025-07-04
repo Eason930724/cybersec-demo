@@ -398,7 +398,7 @@
 
                     try {
                         const payload = { contents: aiAssistantChatHistory };
-                        const apiKey = ""; // 將由 Canvas 執行環境提供
+                        const apiKey = "AIzaSyCJIr0VOZOwV_A3xM2wPt6TdRVzeRA7MfA"; // 將由 Canvas 執行環境提供
                         const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
                         const response = await fetch(apiUrl, {
