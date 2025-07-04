@@ -46,20 +46,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>使用者註冊</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
+        
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -69,7 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             justify-content: center;
             padding: 20px;
         }
-
+        
         .register-container {
             background: white;
             padding: 40px;
@@ -80,7 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             position: relative;
             overflow: hidden;
         }
-
+        
         .register-container::before {
             content: '';
             position: absolute;
@@ -90,29 +90,55 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             height: 4px;
             background: linear-gradient(90deg, #667eea, #764ba2);
         }
-
+        
+        /* 返回首頁按鈕 */
+        .back-home-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        
+        .back-home-btn:hover {
+            background: rgba(102, 126, 234, 0.2);
+            transform: translateX(-2px);
+        }
+        
         .register-header {
             text-align: center;
             margin-bottom: 30px;
+            margin-top: 20px;
         }
-
+        
         .register-header h2 {
             color: #333;
             font-size: 28px;
             font-weight: 600;
             margin-bottom: 8px;
         }
-
+        
         .register-header p {
             color: #666;
             font-size: 14px;
         }
-
+        
         .form-group {
             margin-bottom: 20px;
             position: relative;
         }
-
+        
         .form-group label {
             display: block;
             margin-bottom: 8px;
@@ -120,7 +146,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             font-weight: 500;
             font-size: 14px;
         }
-
+        
         .form-group input {
             width: 100%;
             padding: 15px 20px;
@@ -130,27 +156,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             transition: all 0.3s ease;
             background: #f8f9fa;
         }
-
+        
         .form-group input:focus {
             outline: none;
             border-color: #667eea;
             background: white;
             box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
-
+        
         .form-group input::placeholder {
             color: #aaa;
         }
-
+        
         .password-strength {
             margin-top: 8px;
             font-size: 12px;
         }
-
+        
         .strength-weak { color: #e53e3e; }
         .strength-medium { color: #dd6b20; }
         .strength-strong { color: #38a169; }
-
+        
         .register-btn {
             width: 100%;
             padding: 15px;
@@ -164,23 +190,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             transition: all 0.3s ease;
             margin-top: 10px;
         }
-
+        
         .register-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
         }
-
+        
         .register-btn:active {
             transform: translateY(0);
         }
-
+        
         .register-btn:disabled {
             background: #ccc;
             cursor: not-allowed;
             transform: none;
             box-shadow: none;
         }
-
+        
         .alert {
             padding: 15px;
             border-radius: 12px;
@@ -191,41 +217,57 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             align-items: center;
             gap: 10px;
         }
-
+        
         .alert-error {
             background: #fee;
             color: #c53030;
             border: 1px solid #fed7d7;
         }
-
+        
         .alert-success {
             background: #f0fff4;
             color: #38a169;
             border: 1px solid #c6f6d5;
         }
-
+        
         .alert-icon {
             font-size: 18px;
         }
-
+        
         .form-footer {
             text-align: center;
             margin-top: 30px;
             padding-top: 20px;
             border-top: 1px solid #e1e5e9;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
         }
-
+        
         .form-footer a {
             color: #667eea;
             text-decoration: none;
             font-size: 14px;
             font-weight: 500;
+            transition: all 0.3s ease;
         }
-
+        
         .form-footer a:hover {
             text-decoration: underline;
         }
-
+        
+        .home-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #718096 !important;
+            font-size: 13px !important;
+        }
+        
+        .home-link:hover {
+            color: #667eea !important;
+        }
+        
         .requirements {
             background: #f7fafc;
             border: 1px solid #e2e8f0;
@@ -234,49 +276,61 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             margin-bottom: 20px;
             font-size: 13px;
         }
-
+        
         .requirements h4 {
             color: #4a5568;
             margin-bottom: 8px;
             font-size: 14px;
         }
-
+        
         .requirements ul {
             list-style: none;
             padding: 0;
         }
-
+        
         .requirements li {
             color: #718096;
             margin-bottom: 4px;
             padding-left: 20px;
             position: relative;
         }
-
+        
         .requirements li::before {
             content: '•';
             position: absolute;
             left: 0;
             color: #cbd5e0;
         }
-
+        
         @media (max-width: 480px) {
             .register-container {
                 padding: 30px 20px;
                 margin: 10px;
             }
             
+            .register-header {
+                margin-top: 30px;
+            }
+            
             .register-header h2 {
                 font-size: 24px;
             }
+            
+            .back-home-btn {
+                top: 15px;
+                left: 15px;
+                width: 35px;
+                height: 35px;
+                font-size: 14px;
+            }
         }
-
+        
         /* Loading animation */
         .loading {
             opacity: 0.7;
             pointer-events: none;
         }
-
+        
         .loading .register-btn {
             background: #ccc;
             cursor: not-allowed;
@@ -285,6 +339,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
     <div class="register-container">
+        <!-- 返回首頁按鈕 -->
+        <a href="index.php" class="back-home-btn" title="返回首頁">
+            <i class="fas fa-home"></i>
+        </a>
+        
         <div class="register-header">
             <h2>使用者註冊</h2>
             <p>建立您的新帳號</p>
@@ -359,6 +418,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <div class="form-footer">
             <a href="login.php">已有帳號？立即登入</a>
+            <a href="index.php" class="home-link">
+                <i class="fas fa-arrow-left"></i>
+                返回首頁
+            </a>
         </div>
     </div>
 
