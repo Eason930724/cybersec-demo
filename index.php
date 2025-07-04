@@ -21,9 +21,48 @@ session_start();
             background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #0f172a 100%) !important;
             min-height: 100vh !important;
         }
+        
+        /* 添加提示框樣式 */
+        .alert {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            background: #ef4444;
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            display: none;
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        .alert.show {
+            display: block;
+        }
+        
+        .alert i {
+            margin-right: 8px;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- 添加提示框 -->
+    <div class="alert" id="loginAlert">
+        <i class="fas fa-exclamation-triangle"></i>
+        請先登入才能開始挑戰！
+    </div>
 
     <header class="header">
         <div class="container">
@@ -32,7 +71,6 @@ session_start();
                     <i class="fas fa-shield-alt"></i>
                     <span>資安互動式闖關平台</span>
                 </div>
-
                 <nav class="nav" id="nav">
                     <a href="#" class="nav-link">
                         <i class="fas fa-book-open"></i>
@@ -47,7 +85,6 @@ session_start();
                         <span>公告</span>
                     </a>
                 </nav>
-
                 <div class="actions">
                     <?php if (isset($_SESSION['username'])): ?>
                         <span style="color:white; margin-right: 10px;">
@@ -59,7 +96,6 @@ session_start();
                         <a href="register.php" class="btn btn-primary">註冊</a>
                     <?php endif; ?>
                 </div>
-
                 <button class="mobile-menu-btn" id="mobile-menu-btn">
                     <i class="fas fa-bars"></i>
                 </button>
@@ -74,16 +110,13 @@ session_start();
                     <i class="fas fa-shield-alt"></i>
                     <span>專業資安培訓平台</span>
                 </div>
-
                 <h1 class="hero-title">
                     資安互動式<span class="gradient-text">闖關平台</span>
                 </h1>
-
                 <p class="hero-subtitle">
                     從基礎概念到攻防實戰，打造你的資安實力<br>
                     <span class="highlight">實戰演練 • 技能提升 • 證書認證</span>
                 </p>
-
                 <div class="hero-actions">
                     <button class="btn btn-cta" id="startChallengeBtn">
                         <i class="fas fa-crosshairs"></i> 立即開始挑戰
@@ -92,7 +125,6 @@ session_start();
                         <i class="fas fa-book-open"></i> 瀏覽課程
                     </button>
                 </div>
-
                 <div class="features">
                     <div class="feature-card">
                         <div class="feature-icon blue">
@@ -101,7 +133,6 @@ session_start();
                         <h3>互動式學習</h3>
                         <p>透過實際操作和模擬環境，深入理解資安概念與技術</p>
                     </div>
-
                     <div class="feature-card">
                         <div class="feature-icon green">
                             <i class="fas fa-crosshairs"></i>
@@ -109,7 +140,6 @@ session_start();
                         <h3>實戰挑戰</h3>
                         <p>多樣化的挑戰關卡，從初級到高級，循序漸進提升技能</p>
                     </div>
-
                     <div class="feature-card">
                         <div class="feature-icon purple">
                             <i class="fas fa-trophy"></i>
@@ -118,7 +148,6 @@ session_start();
                         <p>完成挑戰獲得專業認證，展示你的資安專業能力</p>
                     </div>
                 </div>
-
                 <div class="stats">
                     <div class="stat-item">
                         <div class="stat-number blue">1000+</div>
@@ -154,15 +183,37 @@ session_start();
     </footer>
 
     <script>
+    // 將PHP session狀態傳遞給JavaScript
+    const isLoggedIn = <?php echo isset($_SESSION['username']) ? 'true' : 'false'; ?>;
+    
     document.addEventListener('DOMContentLoaded', function() {
         const startChallengeBtn = document.getElementById('startChallengeBtn');
+        const loginAlert = document.getElementById('loginAlert');
+        
         if (startChallengeBtn) {
             startChallengeBtn.addEventListener('click', function() {
-                window.location.href = 'home1.php';
+                if (isLoggedIn) {
+                    // 用戶已登入，直接跳轉到挑戰頁面
+                    window.location.href = 'home1.php';
+                } else {
+                    // 用戶未登入，顯示提示並跳轉到登入頁面
+                    showLoginAlert();
+                    setTimeout(function() {
+                        window.location.href = 'login.php';
+                    }, 2000); // 2秒後跳轉
+                }
             });
+        }
+        
+        function showLoginAlert() {
+            loginAlert.classList.add('show');
+            
+            // 3秒後自動隱藏提示框
+            setTimeout(function() {
+                loginAlert.classList.remove('show');
+            }, 3000);
         }
     });
     </script>
-
 </body>
 </html>
