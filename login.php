@@ -224,7 +224,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <div class="login-container">
         <div class="login-header">
-            <h2>🔐 使用者登入</h2>
+            <h2>使用者登入</h2>
             <p>請輸入您的帳號密碼</p>
         </div>
 
