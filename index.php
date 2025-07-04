@@ -22,46 +22,239 @@ session_start();
             min-height: 100vh !important;
         }
         
-        /* 添加提示框樣式 */
-        .alert {
+        /* 模態框樣式 */
+        .modal-overlay {
             position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 15px 20px;
-            background: #ef4444;
-            color: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            z-index: 1000;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
             display: none;
-            animation: slideIn 0.3s ease-out;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease-out;
         }
         
-        .alert.show {
-            display: block;
+        .modal-overlay.show {
+            display: flex;
         }
         
-        .alert i {
-            margin-right: 8px;
+        .modal {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            max-width: 480px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            transform: scale(0.9);
+            animation: modalSlideIn 0.3s ease-out forwards;
         }
         
-        @keyframes slideIn {
+        .modal-header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        
+        .modal-icon {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            color: white;
+            font-size: 24px;
+        }
+        
+        .modal-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 8px;
+        }
+        
+        .modal-subtitle {
+            color: #6b7280;
+            font-size: 16px;
+        }
+        
+        .modal-content {
+            margin-bottom: 32px;
+        }
+        
+        .option-card {
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #f9fafb;
+        }
+        
+        .option-card:hover {
+            border-color: #3b82f6;
+            background: #eff6ff;
+            transform: translateY(-2px);
+        }
+        
+        .option-card:last-child {
+            margin-bottom: 0;
+        }
+        
+        .option-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .option-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            color: white;
+            font-size: 16px;
+        }
+        
+        .option-icon.guest {
+            background: linear-gradient(135deg, #10b981, #059669);
+        }
+        
+        .option-icon.login {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+        }
+        
+        .option-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1f2937;
+        }
+        
+        .option-description {
+            color: #6b7280;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .modal-btn {
+            flex: 1;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .modal-btn.cancel {
+            background: #f3f4f6;
+            color: #6b7280;
+        }
+        
+        .modal-btn.cancel:hover {
+            background: #e5e7eb;
+        }
+        
+        .modal-btn.primary {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+        }
+        
+        .modal-btn.primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes modalSlideIn {
             from {
-                transform: translateX(100%);
+                transform: scale(0.9) translateY(-20px);
                 opacity: 0;
             }
             to {
-                transform: translateX(0);
+                transform: scale(1) translateY(0);
                 opacity: 1;
+            }
+        }
+        
+        /* 響應式設計 */
+        @media (max-width: 768px) {
+            .modal {
+                padding: 24px;
+                margin: 20px;
+            }
+            
+            .modal-actions {
+                flex-direction: column;
             }
         }
     </style>
 </head>
 <body>
-    <!-- 添加提示框 -->
-    <div class="alert" id="loginAlert">
-        <i class="fas fa-exclamation-triangle"></i>
-        請先登入才能開始挑戰！
+    <!-- 選擇模態框 -->
+    <div class="modal-overlay" id="choiceModal">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-icon">
+                    <i class="fas fa-user-check"></i>
+                </div>
+                <h2 class="modal-title">選擇進入方式</h2>
+                <p class="modal-subtitle">請選擇您要如何開始挑戰</p>
+            </div>
+            
+            <div class="modal-content">
+                <div class="option-card" id="guestOption">
+                    <div class="option-header">
+                        <div class="option-icon guest">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="option-title">訪客模式</div>
+                    </div>
+                    <div class="option-description">
+                        快速開始體驗挑戰，無需註冊即可進行基礎關卡
+                    </div>
+                </div>
+                
+                <div class="option-card" id="loginOption">
+                    <div class="option-header">
+                        <div class="option-icon login">
+                            <i class="fas fa-sign-in-alt"></i>
+                        </div>
+                        <div class="option-title">登入帳號</div>
+                    </div>
+                    <div class="option-description">
+                        登入後可保存進度、獲得認證，享受完整功能
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-actions">
+                <button class="modal-btn cancel" id="cancelBtn">
+                    <i class="fas fa-times"></i> 取消
+                </button>
+                <button class="modal-btn primary" id="confirmBtn" disabled>
+                    <i class="fas fa-arrow-right"></i> 確認
+                </button>
+            </div>
+        </div>
     </div>
 
     <header class="header">
@@ -188,7 +381,13 @@ session_start();
     
     document.addEventListener('DOMContentLoaded', function() {
         const startChallengeBtn = document.getElementById('startChallengeBtn');
-        const loginAlert = document.getElementById('loginAlert');
+        const choiceModal = document.getElementById('choiceModal');
+        const guestOption = document.getElementById('guestOption');
+        const loginOption = document.getElementById('loginOption');
+        const confirmBtn = document.getElementById('confirmBtn');
+        const cancelBtn = document.getElementById('cancelBtn');
+        
+        let selectedOption = null;
         
         if (startChallengeBtn) {
             startChallengeBtn.addEventListener('click', function() {
@@ -196,23 +395,98 @@ session_start();
                     // 用戶已登入，直接跳轉到挑戰頁面
                     window.location.href = 'home1.php';
                 } else {
-                    // 用戶未登入，顯示提示並跳轉到登入頁面
-                    showLoginAlert();
-                    setTimeout(function() {
-                        window.location.href = 'login.php';
-                    }, 2000); // 2秒後跳轉
+                    // 用戶未登入，顯示選擇模態框
+                    showChoiceModal();
                 }
             });
         }
         
-        function showLoginAlert() {
-            loginAlert.classList.add('show');
-            
-            // 3秒後自動隱藏提示框
-            setTimeout(function() {
-                loginAlert.classList.remove('show');
-            }, 3000);
+        // 顯示選擇模態框
+        function showChoiceModal() {
+            choiceModal.classList.add('show');
+            document.body.style.overflow = 'hidden'; // 防止背景滾動
         }
+        
+        // 隱藏選擇模態框
+        function hideChoiceModal() {
+            choiceModal.classList.remove('show');
+            document.body.style.overflow = 'auto';
+            selectedOption = null;
+            updateConfirmButton();
+            clearSelection();
+        }
+        
+        // 選項點擊事件
+        guestOption.addEventListener('click', function() {
+            selectOption('guest');
+        });
+        
+        loginOption.addEventListener('click', function() {
+            selectOption('login');
+        });
+        
+        // 選擇選項
+        function selectOption(option) {
+            selectedOption = option;
+            clearSelection();
+            
+            if (option === 'guest') {
+                guestOption.style.borderColor = '#10b981';
+                guestOption.style.background = '#ecfdf5';
+            } else if (option === 'login') {
+                loginOption.style.borderColor = '#3b82f6';
+                loginOption.style.background = '#eff6ff';
+            }
+            
+            updateConfirmButton();
+        }
+        
+        // 清除選擇樣式
+        function clearSelection() {
+            guestOption.style.borderColor = '#e5e7eb';
+            guestOption.style.background = '#f9fafb';
+            loginOption.style.borderColor = '#e5e7eb';
+            loginOption.style.background = '#f9fafb';
+        }
+        
+        // 更新確認按鈕狀態
+        function updateConfirmButton() {
+            if (selectedOption) {
+                confirmBtn.disabled = false;
+                confirmBtn.style.opacity = '1';
+            } else {
+                confirmBtn.disabled = true;
+                confirmBtn.style.opacity = '0.5';
+            }
+        }
+        
+        // 確認按鈕點擊事件
+        confirmBtn.addEventListener('click', function() {
+            if (selectedOption === 'guest') {
+                window.location.href = 'home1.php';
+            } else if (selectedOption === 'login') {
+                window.location.href = 'login.php';
+            }
+        });
+        
+        // 取消按鈕點擊事件
+        cancelBtn.addEventListener('click', function() {
+            hideChoiceModal();
+        });
+        
+        // 點擊背景關閉模態框
+        choiceModal.addEventListener('click', function(e) {
+            if (e.target === choiceModal) {
+                hideChoiceModal();
+            }
+        });
+        
+        // ESC鍵關閉模態框
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && choiceModal.classList.contains('show')) {
+                hideChoiceModal();
+            }
+        });
     });
     </script>
 </body>
