@@ -286,7 +286,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <div class="register-container">
         <div class="register-header">
-            <h2>📝 使用者註冊</h2>
+            <h2>使用者註冊</h2>
             <p>建立您的新帳號</p>
         </div>
 
