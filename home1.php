@@ -219,7 +219,7 @@
 
               try {
                 const payload = { contents: aiAssistantChatHistory };
-                const apiKey = "AIzaSyCJIr0VOZOwV_A3xM2wPt6TdRVzeRA7MfA"; // Leave this as-is; Canvas will provide the key at runtime.
+                const apiKey = ""; // Leave this as-is; Canvas will provide the key at runtime.
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
                 const response = await fetch(apiUrl, {
